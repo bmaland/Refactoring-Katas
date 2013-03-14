@@ -14,16 +14,22 @@ describe GildedRose do
       items[0].name.should == name
     end
 
-    it 'lowers the sell in values of all items' do
+    it 'lowers the sell in of all items' do
       old_items = items.map(&:sell_in)
-
       GildedRose.new(items).update_quality
-
       items.each_with_index do |item, i|
         item.sell_in.should < old_items[i]
       end
     end
 
+    # It's so pretty ;_;
+    it 'lowers the quality of all items' do
+      old_items = items.map(&:quality)
+      GildedRose.new(items).update_quality
+      items.each_with_index do |item, i|
+        item.quality.should < old_items[i]
+      end
+    end
   end
 
 end
