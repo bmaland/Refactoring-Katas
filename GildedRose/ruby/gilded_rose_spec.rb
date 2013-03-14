@@ -10,15 +10,17 @@ describe GildedRose do
     it 'does not change the name' do
       name = 'foo'
       items = [Item.new(name, sell_in: 0, quality: 0)]
-      GildedRose.new(items).update_quality()
+      GildedRose.new(items).update_quality
       items[0].name.should == name
     end
 
     it 'lowers the sell in values of all items' do
-      items.each do |item|
-        old = item.sell_in
-        GildedRose.new(items).update_quality()
-        item.sell_in.should < old
+      old_items = items.map(&:sell_in)
+
+      GildedRose.new(items).update_quality
+
+      items.each_with_index do |item, i|
+        item.sell_in.should < old_items[i]
       end
     end
 
