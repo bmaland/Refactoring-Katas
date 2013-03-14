@@ -76,6 +76,34 @@ describe GildedRose do
         end
       end
     end
+
+    context 'when the item is "Backstage passes to a TAFKAL80ETC concert"' do
+      let(:name) { 'Backstage passes to a TAFKAL80ETC concert' }
+
+      it 'should increase its quality when sell_in lowers' do
+        update_with(name: name, quality: 0, sell_in: 10) do |item, old_item|
+          item.quality.should > old_item.quality
+        end
+      end
+
+      it 'should increase its quality by 3 when sell_in is lower than 5' do
+        update_with(name: name, quality: 0, sell_in: 4) do |item, old_item|
+          item.quality.should == old_item.quality + 3
+        end
+      end
+
+      it 'should increase its quality by 2 when sell_in is lower than 10' do
+        update_with(name: name, quality: 0, sell_in: 9) do |item, old_item|
+          item.quality.should == old_item.quality + 2
+        end
+      end
+
+      it 'gets a quality of 0 when sell_in is 0' do
+        update_with(name: name, quality: 0, sell_in: 0) do |item, old_item|
+          item.quality.should == 0
+        end
+      end
+    end
   end
 
 end
