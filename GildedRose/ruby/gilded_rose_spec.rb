@@ -30,6 +30,17 @@ describe GildedRose do
         item.quality.should < old_items[i]
       end
     end
+
+    context 'when the sell by date has passed' do
+
+      let(:items) { [Item.new('name', sell_in: 0, quality: 4)] }
+
+      it 'degrades quality twice as fast' do
+        GildedRose.new(items).update_quality
+        items.first.quality.should == 2
+      end
+
+    end
   end
 
 end
