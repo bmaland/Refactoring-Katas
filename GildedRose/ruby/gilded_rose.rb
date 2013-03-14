@@ -56,10 +56,10 @@ end
 class Item
   attr_accessor :name, :sell_in, :quality
 
-  def initialize(name, sell_in, quality)
+  def initialize(name, args={})
     @name = name
-    @sell_in = sell_in
-    @quality = quality
+    @sell_in = args.fetch(:sell_in)
+    @quality = args.fetch(:quality)
   end
 
   def to_s()
