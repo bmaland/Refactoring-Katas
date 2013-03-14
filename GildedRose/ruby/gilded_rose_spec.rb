@@ -19,16 +19,14 @@ describe GildedRose do
     end
 
     it 'lowers the sell in of all items' do
-      items = [sell_in: 10, sell_in: 20]
-      update_with(items) do |item, i|
-        item.sell_in.should < items[i][:sell_in]
+      update_with([sell_in: 10, sell_in: 20]) do |item, old_item|
+        item.sell_in.should < old_item.sell_in
       end
     end
 
     it 'lowers the quality of all items' do
-      items = [quality: 10, quality: 20]
-      update_with(items) do |item, i|
-        item.quality.should < items[i][:quality]
+      update_with([quality: 10, quality: 20]) do |item, old_item|
+        item.quality.should < old_item.quality
       end
     end
 
@@ -36,16 +34,14 @@ describe GildedRose do
       let(:name) { 'Aged Brie' }
 
       it 'increases quality over time' do
-        old_quality = 0
-        update_with(name: name, quality: old_quality) do |item|
-          item.quality.should > old_quality
+        update_with(name: name, quality: 0) do |item, old_item|
+          item.quality.should > old_item.quality
         end
       end
 
       it 'never has a quality larger than 50' do
-        old_quality = 50
-        update_with(name: name, quality: old_quality) do |item|
-          item.quality.should == old_quality
+        update_with(name: name, quality: 50) do |item, old_item|
+          item.quality.should == old_item.quality
         end
       end
     end
@@ -74,9 +70,9 @@ describe GildedRose do
       let(:name) { 'Sulfuras, Hand of Ragnaros' }
 
       it 'keeps its sell in and quality' do
-        update_with(name: name, sell_in: 10, quality: 10) do |item|
-          item.sell_in.should == 10
-          item.quality.should == 10
+        update_with(name: name, sell_in: 10, quality: 10) do |item, old_item|
+          item.sell_in.should == old_item.sell_in
+          item.quality.should == old_item.quality
         end
       end
     end
