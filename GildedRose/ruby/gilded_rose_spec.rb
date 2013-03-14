@@ -31,6 +31,15 @@ describe GildedRose do
       end
     end
 
+    context 'when an item has 0 quality' do
+      let(:items) { [Item.new('name', sell_in: 0, quality: 0)] }
+
+      it 'should never become negative' do
+        GildedRose.new(items).update_quality
+        items.first.quality.should == 0
+      end
+    end
+
     context 'when the sell by date has passed' do
 
       let(:items) { [Item.new('name', sell_in: 0, quality: 4)] }
