@@ -31,6 +31,16 @@ describe GildedRose do
       end
     end
 
+    context 'when the item is an aged brie' do
+      let(:items) { [Item.new('Aged Brie', sell_in: 0, quality: 0)] }
+
+      it 'increases quality over time' do
+        old_quality = items.first.quality
+        GildedRose.new(items).update_quality
+        items.first.quality.should > old_quality
+      end
+    end
+
     context 'when an item has 0 quality' do
       let(:items) { [Item.new('name', sell_in: 0, quality: 0)] }
 
